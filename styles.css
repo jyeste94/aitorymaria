@@ -1,0 +1,864 @@
+/* =========================================================================
+   VARIABLES & BASE STYLES
+   ========================================================================= */
+:root {
+    --bg-color: #FDFBF7; /* Cream */
+    --text-color: #522228; /* Burgundy/Dark Red */
+    --accent-color: #7b4a50; /* Lighter Burgundy */
+    --gray-color: #8c8c8c;
+    --font-script: 'Kalam', cursive;
+    --font-sans: 'Montserrat', sans-serif;
+    --transition: 0.4s ease-in-out;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* When the envelope overlay is active, lock scroll */
+body.locked {
+    overflow: hidden;
+}
+
+h1, h2, h3, .names {
+    font-weight: normal;
+}
+
+a {
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+ul {
+    list-style: none;
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* =========================================================================
+   PRELOADER / ENVELOPE (INTERACTIVE OPENING)
+   ========================================================================= */
+.envelope-preloader {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background-color: #f1ebd9;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 1s ease, visibility 1s ease;
+}
+
+.envelope-preloader.open {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.envelope {
+    position: relative;
+    width: 320px;
+    height: 220px;
+    background: #e8dfc7;
+    border-radius: 4px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.envelope::before, .envelope::after {
+    content: '';
+    position: absolute;
+    width: 0; height: 0;
+}
+
+/* Flaps styling based on standard envelopes */
+.envelope-flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-left: 160px solid transparent;
+    border-right: 160px solid transparent;
+    border-top: 130px solid #dcd1af;
+    transform-origin: top;
+    transition: transform 0.6s ease-in-out;
+    z-index: 2;
+}
+
+.envelope.is-opening .envelope-flap {
+    transform: rotateX(180deg);
+}
+
+.wax-seal {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70px;
+    height: 70px;
+    z-index: 3;
+    transition: all 0.5s ease;
+}
+
+.wax-seal img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.envelope.is-opening .wax-seal {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.5);
+}
+
+.envelope-body {
+    position: absolute;
+    bottom: 20px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.pulse {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(82, 34, 40, 0.4);
+    animation: animate-pulse 2s infinite;
+}
+
+@keyframes animate-pulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(82, 34, 40, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(82, 34, 40, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(82, 34, 40, 0); }
+}
+
+/* =========================================================================
+   NAVIGATION
+   ========================================================================= */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+}
+
+.nav-brand {
+    font-family: var(--font-script);
+    font-size: 2rem;
+    color: var(--text-color);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-links a {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: var(--transition);
+}
+
+.nav-links a:hover {
+    color: var(--accent-color);
+    opacity: 0.7;
+}
+
+.btn-rsvp-nav {
+    background: transparent;
+    border: 1px solid var(--text-color);
+    color: var(--text-color);
+    padding: 8px 16px;
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-rsvp-nav:hover {
+    background: var(--text-color);
+    color: var(--bg-color);
+}
+
+/* =========================================================================
+   HERO SECTION
+   ========================================================================= */
+.hero-section {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.hero-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center bottom;
+}
+
+/* Subtle fade over the watercolor image to ensure text is legible */
+.hero-background .overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    /* Dark overlay for contrast over the whole image, then fading to cream at the very bottom edge */
+    background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.35) 85%, #FDFBF7 100%);
+}
+
+.hero-content {
+    max-width: 600px;
+    color: #ffffff;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.4);
+}
+
+.hero-content .subtitle {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+.hero-content .names {
+    font-family: var(--font-script);
+    font-size: 5rem;
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+
+.hero-content .date {
+    font-size: 1.1rem;
+    font-weight: 300;
+    margin-bottom: 10px;
+}
+
+.hero-content .location-small {
+    font-size: 0.9rem;
+    font-weight: 300;
+    margin-bottom: 40px;
+}
+
+.hero-content .btn-primary {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(4px);
+    border-radius: 30px;
+    color: #ffffff;
+    text-shadow: none;
+}
+
+.hero-content .btn-primary:hover {
+    background: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.btn-primary {
+    display: inline-block;
+    background: var(--text-color);
+    color: var(--bg-color);
+    padding: 15px 35px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-primary:hover {
+    background: var(--accent-color);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(82, 34, 40, 0.2);
+}
+
+/* =========================================================================
+   COUNTDOWN SECTION
+   ========================================================================= */
+.countdown-section {
+    padding: 80px 20px;
+    background-color: var(--bg-color);
+    text-align: center;
+}
+
+.countdown-title {
+    font-family: var(--font-script);
+    font-size: 4.5rem;
+    color: var(--text-color);
+    margin-bottom: 5px;
+    line-height: 1.1;
+}
+
+.countdown-subtitle {
+    font-family: var(--font-sans);
+    color: var(--accent-color);
+    font-size: 1.1rem;
+    font-weight: 300;
+    margin-bottom: 50px;
+}
+
+.countdown-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.countdown-item {
+    text-align: center;
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 25px 30px;
+    box-shadow: 0 4px 15px rgba(82, 34, 40, 0.04);
+}
+
+.countdown-item span {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 3.5rem;
+    font-weight: 400;
+    color: #4a788c;
+    margin-bottom: 5px;
+    line-height: 1;
+}
+
+.countdown-item p {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-color);
+}
+
+/* =========================================================================
+   PHOTO SEPARATOR
+   ========================================================================= */
+.photo-separator {
+    width: 100%;
+    height: 60vh; /* A beautiful tall banner */
+    max-height: 800px;
+    min-height: 400px;
+    overflow: hidden;
+}
+
+.photo-separator img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+/* =========================================================================
+   DETAILS SECTION
+   ========================================================================= */
+.details-section {
+    padding: 100px 20px;
+    background-color: var(--bg-color);
+}
+
+.details-title {
+    font-family: var(--font-sans);
+    font-size: 3.5rem;
+    color: var(--text-color);
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.details-subtitle {
+    font-family: var(--font-sans);
+    color: var(--accent-color);
+    font-size: 1.1rem;
+    font-weight: 300;
+    margin-bottom: 50px;
+}
+
+.details-card {
+    background-color: #ffffff;
+    max-width: 500px;
+    margin: 0 auto;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 5px 25px rgba(82, 34, 40, 0.05);
+}
+
+.details-image img {
+    width: 100%;
+    border-radius: 4px;
+    object-fit: cover;
+    margin-bottom: 25px;
+}
+
+.details-content {
+    padding: 0 10px 10px;
+    text-align: left;
+}
+
+.details-label {
+    font-weight: 300;
+    font-size: 1.3rem;
+    color: var(--accent-color);
+    margin-bottom: 5px;
+    font-family: 'Times New Roman', Times, serif; /* Basic serif for elegant contrast */
+}
+
+.details-venue {
+    font-weight: 500;
+    font-size: 1.3rem;
+    color: var(--text-color);
+    margin-bottom: 30px;
+}
+
+.details-list {
+    margin-bottom: 40px;
+}
+
+.details-list li {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.details-list li span {
+    font-size: 0.95rem;
+    color: var(--text-color);
+}
+
+.icon-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #f1ebd9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #4a788c;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.details-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.btn-blue-solid, .btn-blue-outline {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 12px 10px;
+    border-radius: 30px;
+    font-size: 0.95rem;
+    transition: var(--transition);
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.btn-blue-solid {
+    background-color: #4a788c;
+    color: #ffffff;
+    border: 1px solid #4a788c;
+}
+
+.btn-blue-solid:hover {
+    background-color: #3b5f6f;
+    color: #ffffff;
+}
+
+.btn-blue-outline {
+    background-color: transparent;
+    border: 1px solid #4a788c;
+    color: #4a788c;
+}
+
+.btn-blue-outline:hover {
+    background-color: #f0f4f5;
+}
+
+/* =========================================================================
+   PROGRAM SECTION (TIMELINE)
+   ========================================================================= */
+.program-section {
+    padding: 100px 20px;
+    background-color: #faf7f0; /* Slightly darker cream for contrast */
+}
+
+.timeline {
+    max-width: 600px;
+    margin: 60px auto 0;
+    position: relative;
+}
+
+/* Vertical line */
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 30px;
+    height: 100%;
+    width: 1px;
+    background-color: rgba(82, 34, 40, 0.2);
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: 80px;
+    margin-bottom: 50px;
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+.timeline-item .time {
+    font-weight: 500;
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.timeline-item .icon {
+    position: absolute;
+    top: 5px; left: 20px;
+    width: 20px; height: 20px;
+    background: #faf7f0;
+    color: var(--text-color);
+    text-align: center;
+    border-radius: 50%;
+    line-height: 20px;
+    font-size: 1.2rem;
+}
+
+.timeline-item h4 {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.timeline-item p {
+    font-size: 0.9rem;
+    color: var(--gray-color);
+}
+
+
+
+/* =========================================================================
+   GIFTS SECTION
+   ========================================================================= */
+.gifts-section {
+    padding: 100px 20px;
+    text-align: center;
+}
+
+.gifts-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.gifts-content p {
+    color: var(--gray-color);
+    margin-bottom: 30px;
+}
+
+.bank-details {
+    background: #fff;
+    padding: 30px;
+    border: 1px dashed rgba(82, 34, 40, 0.3);
+    margin-top: 20px;
+}
+
+/* =========================================================================
+   RSVP SECTION
+   ========================================================================= */
+.rsvp-section {
+    padding: 100px 20px;
+    background: linear-gradient(to bottom, #FDFBF7, #e8dfc7);
+    text-align: center;
+}
+
+.rsvp-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 50px;
+    border-radius: 4px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.05);
+}
+
+.rsvp-section .names {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+}
+
+.rsvp-form {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.rsvp-form input, 
+.rsvp-form select, 
+.rsvp-form textarea {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid rgba(82, 34, 40, 0.2);
+    border-radius: 2px;
+    font-family: var(--font-sans);
+    background: #faf7f0;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.rsvp-form input:focus, 
+.rsvp-form select:focus, 
+.rsvp-form textarea:focus {
+    border-color: var(--text-color);
+}
+
+.rsvp-form textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.rsvp-form button {
+    width: 100%;
+}
+
+/* =========================================================================
+   FOOTER
+   ========================================================================= */
+.main-footer {
+    background-color: var(--text-color); /* Elegant Burgundy */
+    padding: 30px 20px;
+    text-align: center;
+}
+
+.footer-credits {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    color: rgba(253, 251, 247, 0.6); /* Soft cream for subtle text */
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.footer-credits i {
+    margin: 0 5px;
+    font-size: 0.8rem;
+    color: rgba(253, 251, 247, 0.8);
+}
+
+.footer-credits a {
+    color: var(--bg-color); /* Full bright cream for the name */
+    font-weight: 500;
+    transition: var(--transition);
+    text-decoration: none;
+    letter-spacing: 2px;
+}
+
+.footer-credits a:hover {
+    color: #e8dfc7; /* Muted cream on hover */
+    text-shadow: 0 0 8px rgba(232, 223, 199, 0.4);
+}
+
+/* =========================================================================
+   ANIMATIONS & REVEALS
+   ========================================================================= */
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* =========================================================================
+   RESPONSIVE DESIGN (MOBILE)
+   ========================================================================= */
+@media (max-width: 900px) {
+    .navbar {
+        display: none; /* Hide top bar completely on small screens */
+    }
+
+    .hero-content .names {
+        font-size: 4rem;
+    }
+
+    }
+
+    .timeline::before {
+        left: 20px;
+    }
+    
+    .timeline-item {
+        padding-left: 60px;
+    }
+    
+    .timeline-item .icon {
+        left: 10px;
+    }
+}
+
+/* Tablets and small screens */
+@media (max-width: 768px) {
+    
+    .hero-content .names {
+        font-size: 4.5rem;
+    }
+    
+    .section-title {
+        font-size: 3rem;
+    }
+
+    .countdown-container {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 15px;
+    }
+    
+    .countdown-item {
+        padding: 20px 10px;
+        flex: 1;
+    }
+
+    .countdown-item span {
+        font-size: 2.2rem;
+    }
+
+    .countdown-title {
+        font-size: 3.5rem;
+    }
+
+    .rsvp-container {
+        padding: 40px 20px;
+    }
+    
+    .rsvp-section .names {
+        font-size: 2.8rem;
+    }
+}
+
+/* Mobile phones (portrait) */
+@media (max-width: 480px) {
+    .envelope {
+        width: 90%; /* Scale down envelope to fit small screens */
+        height: auto;
+        aspect-ratio: 16 / 11;
+    }
+    
+    .envelope-flap {
+        border-left: 45vw solid transparent;
+        border-right: 45vw solid transparent;
+        border-top: 100px solid #dcd1af;
+    }
+
+    .hero-content .names {
+        font-size: 3.5rem;
+    }
+    
+    .hero-content .date {
+        font-size: 1rem;
+    }
+    
+    /* To prevent the title from wrapping on small screens */
+    .countdown-title {
+        font-size: 2.8rem;
+    }
+    
+    .details-title, .section-title {
+        font-size: 2.8rem;
+    }
+
+    .photo-separator {
+        height: 50vh;
+        min-height: 300px;
+    }
+
+    .details-section, .program-section, .gifts-section, .rsvp-section {
+        padding: 60px 15px;
+    }
+
+    .countdown-container {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 8px;
+    }
+
+    .countdown-item {
+        padding: 12px 2px;
+        border-radius: 8px;
+        flex: 1;
+    }
+
+    .countdown-item span {
+        font-size: 1.5rem;
+    }
+    
+    .countdown-item p {
+        font-size: 0.55rem;
+        letter-spacing: 0.5px;
+    }
+
+    .navbar {
+        padding: 15px 20px;
+    }
+
+    .timeline-item h4 {
+        font-size: 1rem;
+    }
+
+    .timeline-item p {
+        font-size: 0.85rem;
+    }
+
+    .rsvp-container {
+        padding: 30px 15px;
+    }
+
+    .rsvp-section .names {
+        font-size: 2.5rem;
+    }
+}
+

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aitor & Maria | Nos Casamos</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Montserrat:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="locked">
+
+    <!-- Preloader / Envelope -->
+    <div id="envelope-preloader" class="envelope-preloader">
+        <div class="envelope">
+            <div class="envelope-flap"></div>
+            <div class="wax-seal" id="open-envelope">
+                <img src="assets/wax_seal.png" alt="Wax Seal">
+                <span class="pulse"></span>
+            </div>
+            <div class="envelope-body">
+                <p>Toca para abrir</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main-content" class="main-content hidden">
+
+        <!-- Header / Navigation -->
+        <nav class="navbar">
+            <div class="nav-brand">A & M</div>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#lugar">El Lugar</a></li>
+                <li><a href="#programa">Programa</a></li>
+                <li><a href="#regalos">Regalos</a></li>
+                <li><button class="btn-rsvp-nav"
+                        onclick="document.getElementById('rsvp').scrollIntoView()">RSVP</button></li>
+            </ul>
+        </nav>
+
+        <!-- Hero Section -->
+        <section id="inicio" class="hero-section">
+            <div class="hero-background">
+                <img src="assets/WhatsApp Image 2026-04-09 at 10.37.49.jpeg" alt="Aitor & Maria Fondo">
+                <div class="overlay"></div>
+            </div>
+            <div class="hero-content reveal">
+                <h3 class="subtitle">Nos casamos</h3>
+                <h1 class="names">Aitor & Maria</h1>
+                <p class="date">Sábado, 15 de Junio de 2026</p>
+                <p class="location-small">MALLORCA, ESPAÑA</p>
+                <a href="#" class="btn-primary">Guardar fecha</a>
+            </div>
+        </section>
+
+        <!-- Countdown -->
+        <section class="countdown-section reveal">
+            <!-- <h2 class="countdown-title">Cuenta regresiva</h2> -->
+            <p class="countdown-subtitle">Hasta que digamos "Sí, quiero"</p>
+            <div class="countdown-container">
+                <div class="countdown-item">
+                    <span id="days">00</span>
+                    <p>Días</p>
+                </div>
+                <div class="countdown-item">
+                    <span id="hours">00</span>
+                    <p>Horas</p>
+                </div>
+                <div class="countdown-item">
+                    <span id="minutes">00</span>
+                    <p>Minutos</p>
+                </div>
+                <div class="countdown-item">
+                    <span id="seconds">00</span>
+                    <p>Segundos</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Image Separator 2 -->
+        <section class="photo-separator reveal">
+            <img src="assets/WhatsApp Image 2026-04-09 at 10.37.49 (1).jpeg" alt="Aitor y Maria">
+        </section>
+
+        <!-- Details Section -->
+        <section id="lugar" class="details-section reveal">
+            <div class="text-center">
+                <h2 class="details-title">Detalles del día</h2>
+                <p class="details-subtitle">Todo lo que necesitas saber sobre nuestro día especial</p>
+            </div>
+
+            <div class="details-card">
+                <div class="details-image">
+                    <img src="assets/estate_photo.png" alt="Estate">
+                </div>
+                <div class="details-content">
+                    <h4 class="details-label">Ubicación</h4>
+                    <h3 class="details-venue">Finca Biniagual</h3>
+
+                    <ul class="details-list">
+                        <li>
+                            <div class="icon-circle"><i class="fas fa-map-marker-alt"></i></div>
+                            <span>Binissalem, Mallorca, Spain</span>
+                        </li>
+                        <li>
+                            <div class="icon-circle"><i class="far fa-calendar-alt"></i></div>
+                            <span>sábado, 15 de Junio de 2026</span>
+                        </li>
+                        <li>
+                            <div class="icon-circle"><i class="far fa-clock"></i></div>
+                            <span>De 5:00 PM</span>
+                        </li>
+                    </ul>
+
+                    <div class="details-buttons">
+                        <a href="https://www.google.com/maps/search/?api=1&query=Finca+Biniagual,+Binissalem,+Mallorca"
+                            target="_blank" class="btn-blue-solid"><i class="fas fa-map-marker-alt"></i> Cómo llegar</a>
+                        <a href="#" id="btn-calendar" class="btn-blue-outline"><i class="fas fa-external-link-alt"></i>
+                            Agregar al calendario</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Program Section (Timeline) -->
+        <section id="programa" class="program-section reveal">
+            <h2 class="details-title text-center">Programa del Día</h2>
+            <div class="timeline">
+                <div class="timeline-item reveal">
+                    <div class="time">17:00</div>
+                    <div class="icon"><i class="fas fa-ring"></i></div>
+                    <div class="content">
+                        <h4>Ceremonia</h4>
+                        <p>Los esperamos para dar el "Sí, quiero" en los jardines de la finca.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="time">18:00</div>
+                    <div class="icon"><i class="fas fa-glass-cheers"></i></div>
+                    <div class="content">
+                        <h4>Cóctel</h4>
+                        <p>Aperitivos, bebidas refrescantes y música en vivo.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="time">20:00</div>
+                    <div class="icon"><i class="fas fa-utensils"></i></div>
+                    <div class="content">
+                        <h4>La Cena</h4>
+                        <p>Disfrutaremos de una deliciosa cena bajo las estrellas.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="time">22:00</div>
+                    <div class="icon"><i class="fas fa-music"></i></div>
+                    <div class="content">
+                        <h4>¡Fiesta!</h4>
+                        <p>Que empiece el baile y la celebración.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- Gifts Section -->
+        <section id="regalos" class="gifts-section reveal">
+            <div class="gifts-content">
+                <h2 class="details-title">Lista de Bodas</h2>
+                <p>El mejor regalo que pueden darnos es su presencia en este día tan especial. Si desean tener un
+                    detalle adicional con nosotros, pueden hacerlo en la siguiente cuenta bancaria:</p>
+                <div class="bank-details">
+                    <p><strong>IBAN:</strong> ES34 0000 0000 0000 0000 0000</p>
+                    <!-- <p><strong>Titular:</strong> Aitor y Maria</p> -->
+                </div>
+            </div>
+        </section>
+
+        <!-- RSVP Section -->
+        <section id="rsvp" class="rsvp-section reveal">
+            <div class="rsvp-container">
+                <h2 class="names">¡Te esperamos!</h2>
+                <p>Por favor confirma tu asistencia rellenando el siguiente formulario.</p>
+                <form id="rsvp-form" class="rsvp-form"
+                    onsubmit="event.preventDefault(); alert('¡Gracias por confirmar!');">
+                    <input type="text" placeholder="Nombre completo" required>
+                    <input type="email" placeholder="Correo electrónico" required>
+                    <select required>
+                        <option value="" disabled selected>¿Asistirás?</option>
+                        <option value="yes">¡Sí, allí estaré!</option>
+                        <option value="no">Lo siento, no podré asistir</option>
+                    </select>
+                    <textarea placeholder="¿Alguna alergia o requisito alimenticio?"></textarea>
+                    <button type="submit" class="btn-primary">Enviar RSVP</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Image Separator 3 -->
+        <section class="photo-separator reveal">
+            <img src="assets/WhatsApp Image 2026-04-09 at 10.37.49 (3).jpeg" alt="Aitor y Maria">
+        </section>
+
+        <!-- Footer -->
+        <footer class="main-footer">
+            <p class="footer-credits">
+                MADE WITH <i class="fas fa-heart"></i> <a href="http://joseyeste.com/" target="_blank">JOSE YESTE</a>
+            </p>
+        </footer>
+    </div>
+
+    <!-- JS -->
+    <script src="script.js"></script>
+</body>
+
+</html>
