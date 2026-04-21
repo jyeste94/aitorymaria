@@ -231,7 +231,7 @@ ul {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center bottom;
+    object-position: 25% bottom; /* Shifting focus towards the left where the couple is */
 }
 
 /* Subtle fade over the watercolor image to ensure text is legible */
@@ -743,6 +743,9 @@ ul {
 
 /* Tablets and small screens */
 @media (max-width: 768px) {
+    .hero-content {
+        margin-top: 35vh; /* Force push down explicitly */
+    }
     
     .hero-content .names {
         font-size: 4.5rem;
@@ -792,6 +795,10 @@ ul {
         border-left: 45vw solid transparent;
         border-right: 45vw solid transparent;
         border-top: 100px solid #dcd1af;
+    }
+
+    .hero-content {
+        margin-top: 40vh; /* Aggressive push down on super small screens */
     }
 
     .hero-content .names {

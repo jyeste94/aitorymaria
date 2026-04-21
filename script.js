@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ==========================================
        COUNTDOWN LOGIC
        ========================================== */
-    const targetDate = new Date("June 15, 2026 17:00:00").getTime();
+    const targetDate = new Date("August 1, 2026 19:30:00").getTime();
     
     function updateCountdown() {
         const now = new Date().getTime();
@@ -85,16 +85,16 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             
             // Format: YYYYMMDDTHHMMSSZ (UTC Time) 
-            // 5:00 PM in Mallorca in June (CEST = UTC+2) -> 15:00:00Z
+            // 19:30 in Mallorca in August (CEST = UTC+2) -> 17:30:00Z
             const icsContent = 
 `BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//Aitor y Maria//Boda//ES
 BEGIN:VEVENT
 UID:boda-aitor-maria-2026
-DTSTAMP:20260615T150000Z
-DTSTART:20260615T150000Z
-DTEND:20260616T040000Z
+DTSTAMP:20260801T173000Z
+DTSTART:20260801T173000Z
+DTEND:20260802T040000Z
 SUMMARY:Boda de Aitor y Maria
 DESCRIPTION:¡Nos casamos! Acompáñanos en nuestro día especial.
 LOCATION:Finca Biniagual\\, Camí de Biniagual\\, s/n\\, 07350 Binissalem\\, Illes Balears
