@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     /* ==========================================
-       ENVELOPE OPENING LOGIC
-       ========================================== */
+       ENVELOPE OPENING LOGIC (Comentado temporalmente)
+       ==========================================
     const envelopePreloader = document.getElementById('envelope-preloader');
     const envelope = document.querySelector('.envelope');
     const mainContent = document.getElementById('main-content');
@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
             envelopePreloader.style.display = 'none';
         }, 1800);
     });
+    */
 
     /* ==========================================
        SCROLL REVEAL ANIMATIONS
@@ -42,6 +43,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
+    
+    // Ejecutar reveal inmediatamente al cargar ya que no dependemos del sobre
+    setTimeout(reveal, 100);
     
     window.addEventListener("scroll", reveal);
     
@@ -76,39 +80,93 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(updateCountdown, 1000);
     updateCountdown(); // Init immediately
     
+    
     /* ==========================================
-       ADD TO CALENDAR (.ICS FILE)
+       RSVP DYNAMIC FORM
        ========================================== */
-    const btnCalendar = document.getElementById("btn-calendar");
-    if(btnCalendar) {
-        btnCalendar.addEventListener("click", function(e) {
-            e.preventDefault();
-            
-            // Format: YYYYMMDDTHHMMSSZ (UTC Time) 
-            // 19:30 in Mallorca in August (CEST = UTC+2) -> 17:30:00Z
-            const icsContent = 
-`BEGIN:VCALENDAR
-VERSION:2.0
-PRODID:-//Aitor y Maria//Boda//ES
-BEGIN:VEVENT
-UID:boda-aitor-maria-2026
-DTSTAMP:20260801T173000Z
-DTSTART:20260801T173000Z
-DTEND:20260802T040000Z
-SUMMARY:Boda de Aitor y Maria
-DESCRIPTION:¡Nos casamos! Acompáñanos en nuestro día especial.
-LOCATION:Finca Biniagual\\, Camí de Biniagual\\, s/n\\, 07350 Binissalem\\, Illes Balears
-END:VEVENT
-END:VCALENDAR`;
+    const attendanceSelect = document.getElementById('attendance');
+    const dynamicFields = document.getElementById('dynamic-rsvp-fields');
+    const extraFields = document.getElementById('attending-extra-fields');
+    const mealFields = document.getElementById('attending-meal-fields');
 
-            const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-            const link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
-            link.setAttribute('download', 'boda-aitor-maria.ics');
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+    if (attendanceSelect) {
+        attendanceSelect.addEventListener('change', function() {
+            // Unhide the bottom block
+            dynamicFields.classList.remove('hidden');
+            setTimeout(() => {
+                dynamicFields.classList.add('visible');
+            }, 10);
+            
+            if (this.value === 'yes') {
+                extraFields.classList.remove('hidden');
+                mealFields.classList.remove('hidden');
+                setTimeout(() => {
+                    extraFields.classList.add('visible');
+                    mealFields.classList.add('visible');
+                }, 10);
+            } else {
+                extraFields.classList.remove('visible');
+                mealFields.classList.remove('visible');
+                setTimeout(() => {
+                    extraFields.classList.add('hidden');
+                    mealFields.classList.add('hidden');
+                }, 400); // Wait for transition
+            }
         });
     }
 
+    /* ==========================================
+       RSVP FORM SUBMISSION
+       ========================================== */
+    const rsvpForm = document.getElementById('rsvp-form');
+    const formMessage = document.getElementById('form-message');
+
+    if (rsvpForm) {
+        rsvpForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = rsvpForm.querySelector('.btn-rsvp-submit');
+            const originalText = submitBtn.innerText;
+            submitBtn.innerText = 'ENVIANDO...';
+            submitBtn.disabled = true;
+
+            const formData = new FormData(rsvpForm);
+
+            fetch('rsvp.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                formMessage.classList.remove('hidden');
+                
+                if (data.status === 'success') {
+                    formMessage.style.backgroundColor = '#d4edda';
+                    formMessage.style.color = '#155724';
+                    formMessage.style.border = '1px solid #c3e6cb';
+                    formMessage.innerText = data.message;
+                    rsvpForm.reset();
+                    // Optionally hide the dynamic fields again
+                    if (dynamicFields) dynamicFields.classList.add('hidden');
+                } else {
+                    formMessage.style.backgroundColor = '#f8d7da';
+                    formMessage.style.color = '#721c24';
+                    formMessage.style.border = '1px solid #f5c6cb';
+                    formMessage.innerText = data.message || 'Error al enviar el formulario.';
+                }
+            })
+            .catch(error => {
+                formMessage.classList.remove('hidden');
+                formMessage.style.backgroundColor = '#f8d7da';
+                formMessage.style.color = '#721c24';
+                formMessage.style.border = '1px solid #f5c6cb';
+                formMessage.innerText = 'Error de conexión. Inténtalo de nuevo más tarde.';
+                console.error('Error:', error);
+            })
+            .finally(() => {
+                submitBtn.innerText = originalText;
+                submitBtn.disabled = false;
+            });
+        });
+    }
 });

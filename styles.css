@@ -606,61 +606,130 @@ ul {
 }
 
 /* =========================================================================
-   RSVP SECTION
+   RSVP SECTION (MINT STYLE)
    ========================================================================= */
 .rsvp-section {
-    padding: 100px 20px;
-    background: linear-gradient(to bottom, #FDFBF7, #e8dfc7);
+    padding: 80px 20px;
+    background-color: #b5cfc7; /* Mint green from screenshot */
     text-align: center;
 }
 
 .rsvp-container {
-    max-width: 600px;
+    max-width: 500px;
     margin: 0 auto;
-    background: #fff;
-    padding: 50px;
-    border-radius: 4px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.05);
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
 }
 
-.rsvp-section .names {
-    font-size: 3.5rem;
-    margin-bottom: 20px;
+.rsvp-title {
+    font-family: var(--font-main);
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #4a5c56;
+    margin-bottom: 30px;
+    font-weight: 500;
 }
 
 .rsvp-form {
-    margin-top: 40px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
+    text-align: left;
+}
+
+.rsvp-form .form-group {
+    transition: opacity 0.4s ease, max-height 0.4s ease;
+}
+
+.rsvp-form .hidden {
+    opacity: 0 !important;
+    max-height: 0 !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+}
+
+.rsvp-form .visible {
+    opacity: 1 !important;
+    max-height: 1000px !important;
+    margin-bottom: 15px;
 }
 
 .rsvp-form input, 
 .rsvp-form select, 
 .rsvp-form textarea {
     width: 100%;
-    padding: 15px;
-    border: 1px solid rgba(82, 34, 40, 0.2);
-    border-radius: 2px;
-    font-family: var(--font-sans);
-    background: #faf7f0;
+    padding: 16px 20px;
+    border: none;
+    border-radius: 4px;
+    font-family: var(--font-main);
+    font-size: 1rem;
+    color: #555;
+    background: #ffffff;
     outline: none;
-    transition: border-color 0.3s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
+
+.rsvp-form select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10"><polygon fill="%23666" points="7 10 0 0 14 0"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 20px top 50%;
+    background-size: 10px auto;
+    color: #666;
 }
 
 .rsvp-form input:focus, 
 .rsvp-form select:focus, 
 .rsvp-form textarea:focus {
-    border-color: var(--text-color);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
 }
 
 .rsvp-form textarea {
-    min-height: 100px;
+    min-height: 120px;
     resize: vertical;
 }
 
-.rsvp-form button {
-    width: 100%;
+.rsvp-form .form-helper {
+    font-size: 0.85rem;
+    color: #4a5c56;
+    font-style: italic;
+    margin-top: -10px;
+    margin-bottom: 5px;
+    padding-left: 5px;
+}
+
+.btn-rsvp-submit {
+    background: #ffffff;
+    color: #333;
+    border: none;
+    border-radius: 30px;
+    padding: 14px 30px;
+    font-family: var(--font-main);
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 4px;
+    float: right;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    align-self: flex-end;
+    margin-top: 10px;
+}
+
+.btn-rsvp-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+.rsvp-form::after {
+    content: "";
+    display: table;
+    clear: both;
 }
 
 /* =========================================================================
@@ -743,10 +812,6 @@ ul {
 
 /* Tablets and small screens */
 @media (max-width: 768px) {
-    .hero-content {
-        margin-top: 35vh; /* Force push down explicitly */
-    }
-    
     .hero-content .names {
         font-size: 4.5rem;
     }
@@ -795,10 +860,6 @@ ul {
         border-left: 45vw solid transparent;
         border-right: 45vw solid transparent;
         border-top: 100px solid #dcd1af;
-    }
-
-    .hero-content {
-        margin-top: 40vh; /* Aggressive push down on super small screens */
     }
 
     .hero-content .names {

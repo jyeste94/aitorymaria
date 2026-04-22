@@ -14,12 +14,12 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <link rel="stylesheet" href="styles.css?v=2">
+    <link rel="stylesheet" href="styles.css?v=4">
 </head>
 
-<body class="locked">
+<body>
 
-    <!-- Preloader / Envelope -->
+    <!-- Preloader / Envelope (Comentado por si se requiere en el futuro)
     <div id="envelope-preloader" class="envelope-preloader">
         <div class="envelope">
             <div class="envelope-flap"></div>
@@ -32,9 +32,10 @@
             </div>
         </div>
     </div>
+    -->
 
     <!-- MAIN CONTENT -->
-    <div id="main-content" class="main-content hidden">
+    <div id="main-content" class="main-content">
 
         <!-- Header / Navigation -->
         <nav class="navbar">
@@ -59,7 +60,7 @@
                 <h3 class="subtitle">Nos casamos</h3>
                 <h1 class="names">Aitor & Maria</h1>
                 <p class="date">Sábado, 1 de Agosto de 2026</p>
-                <p class="location-small">MALLORCA, ESPAÑA</p>
+                <p class="location-small">ALICANTE, ESPAÑA</p>
                 <a href="#" class="btn-primary">Guardar fecha</a>
             </div>
         </section>
@@ -102,16 +103,16 @@
 
             <div class="details-card">
                 <div class="details-image">
-                    <img src="assets/estate_photo.png" alt="Estate">
+                    <img src="assets/estate_photo2.jpg" alt="Estate">
                 </div>
                 <div class="details-content">
                     <h4 class="details-label">Ubicación</h4>
-                    <h3 class="details-venue">Finca Biniagual</h3>
+                    <h3 class="details-venue">La Riera Eventos</h3>
 
                     <ul class="details-list">
                         <li>
                             <div class="icon-circle"><i class="fas fa-map-marker-alt"></i></div>
-                            <span>Binissalem, Mallorca, Spain</span>
+                            <span>C. Alcoholera, 14, Aspe, Alicante</span>
                         </li>
                         <li>
                             <div class="icon-circle"><i class="far fa-calendar-alt"></i></div>
@@ -124,9 +125,9 @@
                     </ul>
 
                     <div class="details-buttons">
-                        <a href="https://www.google.com/maps/search/?api=1&query=Finca+Biniagual,+Binissalem,+Mallorca"
+                        <a href="https://www.google.com/maps/dir/38.3553268,-0.4745631/La+Riera+Eventos,+pol%C3%ADgono+III+hermanas+2%C2%AA+fase,+C.+Alcoholera,+14,+03680+Aspe,+Alicante/@38.3471318,-0.497437,15z/data=!4m8!4m7!1m0!1m5!1m1!1s0xd63c7ee31eac3bb:0xb3a196457a813687!2m2!1d-0.7669061!2d38.3254051?entry=ttu&g_ep=EgoyMDI2MDQxNS4wIKXMDSoASAFQAw%3D%3D"
                             target="_blank" class="btn-blue-solid"><i class="fas fa-map-marker-alt"></i> Cómo llegar</a>
-                        <a href="#" id="btn-calendar" class="btn-blue-outline"><i class="fas fa-external-link-alt"></i>
+                        <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=Boda%20de%20Aitor%20y%20Maria&dates=20260801T173000Z/20260802T040000Z&details=%C2%A1Nos%20casamos!%20Acomp%C3%A1%C3%B1anos%20en%20nuestro%20d%C3%ADa%20especial.&location=La%20Riera%20Eventos%2C%20pol%C3%ADgono%20III%20hermanas%202%C2%AA%20fase%2C%20C.%20Alcoholera%2C%2014%2C%2003680%20Aspe%2C%20Alicante" target="_blank" class="btn-blue-outline"><i class="fas fa-external-link-alt"></i>
                             Agregar al calendario</a>
                     </div>
                 </div>
@@ -142,7 +143,7 @@
                     <div class="icon"><i class="fas fa-glass-cheers"></i></div>
                     <div class="content">
                         <h4>Recepción</h4>
-                        <p>Bienvenidos a la Finca. ¡Empezamos a calentar motores!</p>
+                        <p>Bienvenidos a La Riera. ¡Empezamos a calentar motores!</p>
                     </div>
                 </div>
                 <div class="timeline-item reveal">
@@ -198,19 +199,88 @@
         <!-- RSVP Section -->
         <section id="rsvp" class="rsvp-section reveal">
             <div class="rsvp-container">
-                <h2 class="names">¡Te esperamos!</h2>
-                <p>Por favor confirma tu asistencia rellenando el siguiente formulario.</p>
-                <form id="rsvp-form" class="rsvp-form"
-                    onsubmit="event.preventDefault(); alert('¡Gracias por confirmar!');">
-                    <input type="text" placeholder="Nombre completo" required>
-                    <input type="email" placeholder="Correo electrónico" required>
-                    <select required>
-                        <option value="" disabled selected>¿Asistirás?</option>
-                        <option value="yes">¡Sí, allí estaré!</option>
-                        <option value="no">Lo siento, no podré asistir</option>
-                    </select>
-                    <textarea placeholder="¿Alguna alergia o requisito alimenticio?"></textarea>
-                    <button type="submit" class="btn-primary">Enviar RSVP</button>
+                <h2 class="rsvp-title">SE RUEGA CONFIRMACIÓN</h2>
+                <form id="rsvp-form" class="rsvp-form dynamic-form">
+                    
+                    <div id="form-message" class="hidden" style="padding: 15px; margin-bottom: 20px; border-radius: 4px; text-align: center; font-weight: bold;"></div>
+                    
+                    <div class="form-group">
+                        <select id="attendance" name="attendance" class="form-control" required>
+                            <option value="" disabled selected>¿Asistirás?</option>
+                            <option value="yes">Acepto con mucho placer</option>
+                            <option value="no">Declino asistencia</option>
+                        </select>
+                    </div>
+
+                    <div id="dynamic-rsvp-fields" class="form-group hidden">
+                        <div class="form-group">
+                            <input type="text" id="guest-name" name="name" class="form-control" placeholder="Nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="guest-password" name="password" class="form-control" placeholder="Contraseña">
+                            <p class="form-helper">Solo necesaria si deseas editar tu reserva en el futuro</p>
+                        </div>
+                        
+                        <!-- Fields only for YES -->
+                        <div id="attending-extra-fields" class="form-group hidden">
+                            <div class="form-group">
+                                <input type="tel" id="guest-phone" name="phone" class="form-control" placeholder="Teléfono">
+                            </div>
+                        </div>
+                        
+                        <!-- Always show email after phone (if yes) or after password (if no) -->
+                        <div class="form-group">
+                            <input type="email" id="guest-email" name="email" class="form-control" placeholder="Email">
+                        </div>
+                        
+                        <!-- More fields only for YES -->
+                        <div id="attending-meal-fields" class="form-group hidden">
+                            <div class="form-group">
+                                <select id="guest-companions" name="companions" class="form-control">
+                                    <option value="" disabled selected>¿Vienen acompañantes?</option>
+                                    <option value="0">Vengo solo/a</option>
+                                    <option value="1">1 acompañante</option>
+                                    <option value="2">2 acompañantes</option>
+                                    <option value="3">3 acompañantes</option>
+                                    <option value="4">4 acompañantes</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <select id="guest-meat" name="meat" class="form-control">
+                                    <option value="" disabled selected>Eligen carne</option>
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <select id="guest-fish" name="fish" class="form-control">
+                                    <option value="" disabled selected>Eligen pescado</option>
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <textarea id="guest-songs" name="songs" class="form-control textarea" placeholder="Dinos una o dos canciones que os gustan especialmente"></textarea>
+                            </div>
+                        </div>
+                        
+                        <!-- Always show comments at bottom -->
+                        <div class="form-group">
+                            <textarea id="guest-comments" name="comments" class="form-control textarea" placeholder="Algún comentario o sugerencia"></textarea>
+                        </div>
+                        
+                    </div>
+                    
+                    <button type="submit" class="btn-rsvp-submit">ENVIAR</button>
                 </form>
             </div>
         </section>
