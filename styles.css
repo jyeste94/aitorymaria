@@ -641,6 +641,7 @@ ul {
 
 .rsvp-form .form-group {
     transition: opacity 0.4s ease, max-height 0.4s ease;
+    margin-bottom: 15px;
 }
 
 .rsvp-form .hidden {
@@ -654,8 +655,7 @@ ul {
 
 .rsvp-form .visible {
     opacity: 1 !important;
-    max-height: 1000px !important;
-    margin-bottom: 15px;
+    max-height: 2000px !important;
 }
 
 .rsvp-form input, 
