@@ -52,7 +52,7 @@ $comments   = trim($_POST['comments'] ?? null);
 if (empty($attendance) || empty($name)) {
     echo json_encode([
         'status' => 'error', 
-        'message' => 'Error: Los campos "Nombre" y "¿Asistirás?" son obligatorios.'
+        'message' => 'Error: Los campos "Nombre" y "¿Vas a venir?" son obligatorios.'
     ]);
     exit;
 }

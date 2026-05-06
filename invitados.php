@@ -53,17 +53,13 @@ $guests = $stmt->fetchAll();
 $stats = [
     'attending' => 0,
     'declined' => 0,
-    'total_people' => 0,
-    'total_meat' => 0,
-    'total_fish' => 0
+    'total_people' => 0
 ];
 
 foreach ($guests as $g) {
     if ($g['attendance'] === 'yes') {
         $stats['attending']++;
         $stats['total_people'] += 1 + (int)$g['companions'];
-        $stats['total_meat'] += (int)$g['meat'];
-        $stats['total_fish'] += (int)$g['fish'];
     } else {
         $stats['declined']++;
     }
@@ -104,7 +100,7 @@ foreach ($guests as $g) {
     
     <!-- Resumen -->
     <div class="row g-3 mb-4">
-        <div class="col-md-3">
+        <div class="col-md-6">
             <div class="card card-stat bg-white h-100 p-3 position-relative">
                 <h6 class="text-muted text-uppercase mb-1">Total Confirmados</h6>
                 <h2 class="display-5 mb-0 fw-bold"><?php echo $stats['total_people']; ?></h2>
@@ -112,23 +108,7 @@ foreach ($guests as $g) {
                 <i class="fas fa-users stat-icon text-success"></i>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card card-stat bg-white h-100 p-3 position-relative">
-                <h6 class="text-muted text-uppercase mb-1">Platos de Carne</h6>
-                <h2 class="display-5 mb-0 fw-bold text-danger"><?php echo $stats['total_meat']; ?></h2>
-                <small class="text-muted">Raciones solicitadas</small>
-                <i class="fas fa-drumstick-bite stat-icon text-danger"></i>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card card-stat bg-white h-100 p-3 position-relative">
-                <h6 class="text-muted text-uppercase mb-1">Platos de Pescado</h6>
-                <h2 class="display-5 mb-0 fw-bold text-info"><?php echo $stats['total_fish']; ?></h2>
-                <small class="text-muted">Raciones solicitadas</small>
-                <i class="fas fa-fish stat-icon text-info"></i>
-            </div>
-        </div>
-        <div class="col-md-3">
+        <div class="col-md-6">
             <div class="card card-stat bg-white h-100 p-3 position-relative">
                 <h6 class="text-muted text-uppercase mb-1">Han Declinado</h6>
                 <h2 class="display-5 mb-0 fw-bold text-secondary"><?php echo $stats['declined']; ?></h2>
@@ -153,15 +133,13 @@ foreach ($guests as $g) {
                         <th scope="col">Asistencia</th>
                         <th scope="col">Invitado Principal</th>
                         <th scope="col">Contacto</th>
-                        <th scope="col" class="text-center">Extras</th>
-                        <th scope="col" class="text-center">Carne</th>
-                        <th scope="col" class="text-center">Pescado</th>
-                        <th scope="col">Comentarios / Canciones</th>
+                        <th scope="col" class="text-center">Acompañantes</th>
+                        <th scope="col">Canciones / Comentarios</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if(empty($guests)): ?>
-                        <tr><td colspan="8" class="text-center p-4 text-muted">Aún no hay respuestas en la base de datos.</td></tr>
+                        <tr><td colspan="6" class="text-center p-4 text-muted">Aún no hay respuestas en la base de datos.</td></tr>
                     <?php else: ?>
                         <?php foreach($guests as $guest): ?>
                             <?php $isAttending = ($guest['attendance'] === 'yes'); ?>
@@ -193,12 +171,6 @@ foreach ($guests as $g) {
                                     <?php else: ?>
                                         -
                                     <?php endif; ?>
-                                </td>
-                                <td class="text-center text-danger fw-bold">
-                                    <?php echo $isAttending && $guest['meat'] > 0 ? htmlspecialchars($guest['meat']) : '-'; ?>
-                                </td>
-                                <td class="text-center text-info fw-bold">
-                                    <?php echo $isAttending && $guest['fish'] > 0 ? htmlspecialchars($guest['fish']) : '-'; ?>
                                 </td>
                                 <td>
                                     <?php if(!empty($guest['songs'])): ?>
