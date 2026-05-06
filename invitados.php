@@ -21,26 +21,10 @@ if (!isset($_GET['token']) || $_GET['token'] !== $token_secreto) {
     </html>');
 }
 
-// ==========================================
-// CONFIGURACIÓN DE LA BASE DE DATOS (Fake / Copiado de rsvp.php)
-// ==========================================
-$host = '127.0.0.1';        
-$db   = 'boda_aitorymaria'; 
-$user = 'usuario_boda';     
-$pass = 'contraseña_segura'; 
-$charset = 'utf8mb4';
-
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-$options = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_EMULATE_PREPARES   => false,
-];
-
 try {
-    $pdo = new PDO($dsn, $user, $pass, $options);
+    require_once 'db.php';
 } catch (\PDOException $e) {
-    die("<div class='container mt-5'><div class='alert alert-danger'>Error conectando a la base de datos. Ajusta las credenciales en invitados.php</div></div>");
+    die("<div class='container mt-5'><div class='alert alert-danger'>Error de conexión a la base de datos. Revisa las credenciales en db.php</div></div>");
 }
 
 // Extraer los invitados ordenados por los mas recientes

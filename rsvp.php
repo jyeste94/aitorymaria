@@ -4,31 +4,12 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST");
 header("Content-Type: application/json; charset=UTF-8");
 
-// ==========================================
-// 1. CONFIGURACIÓN DE LA BASE DE DATOS (FAKE)
-// ==========================================
-// Sustituye estos datos por los reales de tu proveedor (Hostinger, Ionos, etc)
-$host = '127.0.0.1';        // Habitualmente 'localhost' o dirección IP
-$db   = 'boda_aitorymaria'; // El nombre de la base de datos
-$user = 'usuario_boda';     // El usuario de la base de datos
-$pass = 'contraseña_segura'; // La contraseña del usuario
-$charset = 'utf8mb4';
-
-// Configuración de conexión segura (PDO)
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-$options = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION, // Lanzar excepciones en errores
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_EMULATE_PREPARES   => false, // Prevenir inyecciones SQL severas
-];
-
 try {
-    $pdo = new PDO($dsn, $user, $pass, $options);
+    require_once 'db.php';
 } catch (\PDOException $e) {
-    // Si falla la conexión, devolver error JSON estructurado
     echo json_encode([
         'status' => 'error', 
-        'message' => 'Error de conexión a la base de datos. Por favor, compruebe la configuración.'
+        'message' => 'Error de conexión a la base de datos.'
     ]);
     exit;
 }
