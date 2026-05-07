@@ -152,6 +152,16 @@ foreach ($guests as $g) {
                                 <td class="text-center">
                                     <?php if($isAttending): ?>
                                         +<?php echo htmlspecialchars($guest['companions']); ?>
+                                        <?php if(!empty($guest['companions_details'])): ?>
+                                            <?php $details = json_decode($guest['companions_details'], true); ?>
+                                            <?php if(is_array($details)): ?>
+                                                <div class="small text-muted mt-1">
+                                                    <?php foreach($details as $c): ?>
+                                                        <div><?php echo htmlspecialchars($c['name']); ?><?php echo !empty($c['child']) ? ' 👶' : ''; ?></div>
+                                                    <?php endforeach; ?>
+                                                </div>
+                                            <?php endif; ?>
+                                        <?php endif; ?>
                                     <?php else: ?>
                                         -
                                     <?php endif; ?>

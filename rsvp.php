@@ -29,6 +29,20 @@ $fish       = isset($_POST['fish']) ? (int)$_POST['fish'] : 0;
 $songs      = trim($_POST['songs'] ?? null);
 $comments   = trim($_POST['comments'] ?? null);
 
+// Datos de acompañantes
+$companions_details = [];
+$compCount = isset($_POST['companions']) ? (int)$_POST['companions'] : 0;
+for ($i = 0; $i < $compCount; $i++) {
+    $cName = trim($_POST['companion_name_' . $i] ?? '');
+    if (!empty($cName)) {
+        $companions_details[] = [
+            'name' => $cName,
+            'child' => isset($_POST['companion_child_' . $i]) ? true : false
+        ];
+    }
+}
+$companions_json = !empty($companions_details) ? json_encode($companions_details, JSON_UNESCAPED_UNICODE) : null;
+
 // Validaciones básicas de seguridad
 if (empty($attendance) || empty($name)) {
     echo json_encode([
@@ -52,8 +66,8 @@ if (!empty($password)) {
 // ==========================================
 // Se utilizan "Prepared Statements" (sentencias con signos "?") que son impermeables a SQL INJECTION.
 $sql = "INSERT INTO rsvp_guests 
-        (attendance, name, password_hash, phone, email, companions, meat, fish, songs, comments) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        (attendance, name, password_hash, phone, email, companions, companions_details, meat, fish, songs, comments) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
 $stmt = $pdo->prepare($sql);
 
@@ -66,6 +80,7 @@ try {
         $phone, 
         $email, 
         $companions, 
+        $companions_json, 
         $meat, 
         $fish, 
         $songs, 

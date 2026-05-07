@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS rsvp_guests (
     phone VARCHAR(20) DEFAULT NULL,
     email VARCHAR(255) DEFAULT NULL,
     companions INT DEFAULT 0,
+    companions_details TEXT DEFAULT NULL,
     meat INT DEFAULT 0,
     fish INT DEFAULT 0,
     songs TEXT DEFAULT NULL,

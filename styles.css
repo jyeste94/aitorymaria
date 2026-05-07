@@ -732,6 +732,42 @@ ul {
     clear: both;
 }
 
+.companions-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.companion-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,0.5);
+    border-radius: 4px;
+    padding: 8px 12px;
+}
+
+.companion-row input[type="text"] {
+    flex: 1;
+}
+
+.companion-row label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.85rem;
+    color: #4a5c56;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.companion-row input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
 /* =========================================================================
    FOOTER
    ========================================================================= */

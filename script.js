@@ -82,8 +82,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     
     /* ==========================================
-       RSVP DYNAMIC FORM
-       ========================================== */
+        RSVP DYNAMIC FORM
+        ========================================== */
     const attendanceSelect = document.getElementById('attendance');
     const dynamicFields = document.getElementById('dynamic-rsvp-fields');
     const extraFields = document.getElementById('attending-extra-fields');
@@ -91,7 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (attendanceSelect) {
         attendanceSelect.addEventListener('change', function() {
-            // Unhide the bottom block
             dynamicFields.classList.remove('hidden');
             setTimeout(() => {
                 dynamicFields.classList.add('visible');
@@ -110,7 +109,43 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(() => {
                     extraFields.classList.add('hidden');
                     mealFields.classList.add('hidden');
-                }, 400); // Wait for transition
+                }, 400);
+            }
+        });
+    }
+
+    /* ==========================================
+       COMPANION FIELDS
+       ========================================== */
+    const companionsSelect = document.getElementById('guest-companions');
+    const companionsContainer = document.getElementById('companions-container');
+
+    if (companionsSelect) {
+        companionsSelect.addEventListener('change', function() {
+            const count = parseInt(this.value) || 0;
+            companionsContainer.innerHTML = '';
+
+            for (let i = 0; i < count; i++) {
+                const row = document.createElement('div');
+                row.className = 'companion-row';
+
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.name = 'companion_name_' + i;
+                input.placeholder = 'Nombre del acompañante ' + (i + 1);
+                input.className = 'form-control';
+
+                const label = document.createElement('label');
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.name = 'companion_child_' + i;
+                checkbox.value = '1';
+                label.appendChild(checkbox);
+                label.appendChild(document.createTextNode(' ¿Es niño/a?'));
+
+                row.appendChild(input);
+                row.appendChild(label);
+                companionsContainer.appendChild(row);
             }
         });
     }
